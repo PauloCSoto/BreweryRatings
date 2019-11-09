@@ -2,7 +2,8 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-    var breweries = (BreweryNamespace.Brewery[])ViewData["Breweries"];
+//    var breweries = (BreweryNamespace.Brewery[])ViewData["Breweries"];
+    var breweries = (List<BreweryNamespace.Brewery>)ViewData["Breweries"];
 }
 
 <div class="text-center">
