@@ -1,0 +1,31 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    var breweries = (BreweryNamespace.Brewery[])ViewData["Breweries"];
+}
+
+<div class="text-center">
+    <h1 class="display-4">IS7024 Project: Local Breweries in Cincinnati!</h1>
+    <hr />
+    <table borders="1" width="90%">
+        <tr><th>Brewery ID</th><th>Brewery Name</th><th>Brewery Type</th><th>Street</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
+
+        @{ 
+            foreach (BreweryNamespace.Brewery brewery in breweries) {
+        <tr align="left">
+            <td>@brewery.Id</td>
+            <td>@brewery.Name</td>
+            <td>@brewery.BreweryType</td>
+            <td>@brewery.Street</td>
+            <td>@brewery.Latitude</td>
+            <td>@brewery.Longitude</td>
+            <td>@brewery.WebsiteUrl</td>
+        </tr>
+                }
+            }
+
+    </table>
+
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
