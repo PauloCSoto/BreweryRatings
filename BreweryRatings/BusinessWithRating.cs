@@ -18,7 +18,7 @@ namespace BusinessNamespace
     public partial class BusinessWithRating
     {
         [JsonProperty("id")]
-        public long Id { get; set; }
+        public String Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -87,7 +87,6 @@ namespace BusinessNamespace
             },
         };
     }
-
 
     internal class BreweryTypeConverter : JsonConverter
     {

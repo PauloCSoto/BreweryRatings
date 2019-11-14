@@ -11,6 +11,8 @@ using System.Net.Http;
 using System.IO;
 using Yelp;
 using BusinessNamespace;
+using YelpBusinessWithReview;
+using ReviewNamespace;
 
 namespace BreweryRatings.Pages
 {
@@ -25,87 +27,70 @@ namespace BreweryRatings.Pages
 
 //        public void OnGet()
         public JsonResult OnGet()
-
         {
-            IDictionary<string, Business> allBusinesses = new Dictionary<string, Business>();
+            //Define dictionary to hold Yelp Businesses
+            //IDictionary<string, Yelp.Business> allBusinesses = new Dictionary<string, Yelp.Business>();
 
-            Task<string> t = Http_Get();
-
+            //Get Yelp Business Search Json data for breweries in Cincinnati
+            Task<string> t = Http_Get("https://api.yelp.com/v3/businesses/search?location=cincinnati&categories=breweries");
             var yelpRatingsString = t.Result;
-
             YelpRating yelpRating = YelpRating.FromJson(yelpRatingsString);
 
-            ViewData["YelpRatings"] = yelpRating;
+            //Uncomment to send Yelp Business Search results with ratings to Page
+            //ViewData["YelpRatings"] = yelpRating;
 
-            Business[] businesses = yelpRating.Businesses;
+            //Define Business array to hold Yelp Business data with ratings
+            Yelp.Business[] businesses = yelpRating.Businesses;
 
-            foreach(Business business in businesses)
+            //Convert array to List for better compatibility
+            List<Yelp.Business> yelpBusinesses = businesses.OfType<Yelp.Business>().ToList();
+
+            //Create new List to hold new Json output
+            var businessesWithReviews = new List<YelpBusinessWithReview.Business>();
+
+            //Loop through businesses in Yelp Business Search results to find matching reviews
+            foreach(Yelp.Business business in yelpBusinesses)
             {
-                allBusinesses.Add(business.Name, business);
-            }
+                Task<string> t2 = Http_Get("https://api.yelp.com/v3/businesses/" + business.Id + "/reviews");
+                var businessReviewJsonString = t2.Result;
+                BusinessReview businessReview = BusinessReview.FromJson(businessReviewJsonString);
 
-            using (var webClient = new WebClient())
-            {
-                List<Brewery> breweriesWithRatings = new List<Brewery>();
-                List<BusinessWithRating> businessesWithRatings = new List<BusinessWithRating>();
-                string jsonString = webClient.DownloadString("https://api.openbrewerydb.org/breweries?by_city=cincinnati");
-                var brewery = Brewery.FromJson(jsonString);
-
-                foreach(Brewery brewbar in brewery)
+                businessesWithReviews.Add(new YelpBusinessWithReview.Business
                 {
-                    if (allBusinesses.ContainsKey(brewbar.Name))
-                    {
-                        var addBiz = new BusinessWithRating();
-                        addBiz.Id = brewbar.Id;
-                        addBiz.Name = brewbar.Name;
-//                        addBiz.BreweryType = brewbar.BreweryType;
-                        addBiz.Street = brewbar.Street;
-                        addBiz.City = brewbar.City;
-                        addBiz.Latitude = brewbar.Latitude;
-                        addBiz.Longitude = brewbar.Longitude;
-                        //                        addBiz.Rating = allBusinesses.Ratings
-
-                        foreach (Business business in businesses)
-                        {
-                            if (business.Name == brewbar.Name)
-                            {
-                                addBiz.Rating = business.Rating;
-                                break;
-                            }
-                        }
-
-                        businessesWithRatings.Add(addBiz);
-
-//                        breweriesWithRatings.Add(addBiz);
-                    }
-                }
-
-                return new JsonResult(businessesWithRatings);
-
-//                return new JsonResult(breweriesWithRatings);
-
-//                ViewData["Breweries"] = breweriesWithRatings;
+                    Id = business.Id,
+                    Alias = business.Alias,
+                    Name = business.Name,
+                    ImageUrl = business.ImageUrl,
+                    IsClosed = business.IsClosed,
+                    Url = business.Url,
+                    ReviewCount = business.ReviewCount,
+                    //NEED HELP: copying the following commented out arrays into their target arrays
+                    //Categories = business.Categories,
+                    Rating = business.Rating,
+                    //Coordinates = business.Coordinates,
+                    Transactions = business.Transactions,
+                    //Price = business.Price,
+                    //Location = business.Location,
+                    Phone = business.Phone,
+                    DisplayPhone = business.DisplayPhone,
+                    Distance = business.Distance,
+                    //NEED HELP: Copying Reviews into target Reviews
+                    //Reviews = businessReview.Reviews,
+                    Total = businessReview.Total,
+                    PossibleLanguages = businessReview.PossibleLanguages
+                });
             }
+            return new JsonResult(businessesWithReviews);
         }
-
-        static async Task<string> Http_Get()
+        static async Task<string> Http_Get(string uri)
         {
-            var targetURL = "https://api.yelp.com/v3/businesses/search?location=cincinnati&categories=breweries";
-
             String myYelpKey = System.IO.File.ReadAllText("YelpAPIKey.txt");
-
             HttpClientHandler handler = new HttpClientHandler();
-
             HttpClient client = new HttpClient(handler);
-
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", myYelpKey);
-
-            HttpResponseMessage response = await client.GetAsync(targetURL);
-
+            HttpResponseMessage response = await client.GetAsync(uri);
             HttpContent content = response.Content;
-
             string result = await content.ReadAsStringAsync();
-
             return result;
         }
     }
