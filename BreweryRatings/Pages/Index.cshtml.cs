@@ -25,8 +25,8 @@ namespace BreweryRatings.Pages
             _logger = logger;
         }
 
-//        public void OnGet()
-        public JsonResult OnGet()
+        public void OnGet()
+        //public JsonResult OnGet()
         {
             //Define dictionary to hold Yelp Businesses
             //IDictionary<string, Yelp.Business> allBusinesses = new Dictionary<string, Yelp.Business>();
@@ -78,7 +78,8 @@ namespace BreweryRatings.Pages
                     PossibleLanguages = businessReview.PossibleLanguages
                 }) ;
             }
-            return new JsonResult(businessesWithReviews);
+            ViewData["BusinessesWithReviews"] = businessesWithReviews;
+            //return new JsonResult(businessesWithReviews);
         }
         static async Task<string> Http_Get(string uri)
         {

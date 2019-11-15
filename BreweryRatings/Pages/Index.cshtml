@@ -2,31 +2,35 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-//    var breweries = (BreweryNamespace.Brewery[])ViewData["Breweries"];
-    var breweries = (List<BreweryNamespace.Brewery>)ViewData["Breweries"];
+    var businessesWithReviews = (List<YelpBusinessWithReview.Business>)ViewData["BusinessesWithReviews"];
 }
-
 <div class="text-center">
     <h1 class="display-4">IS7024 Project: Local Breweries in Cincinnati!</h1>
     <hr />
-    <table borders="1" width="90%">
-        <tr><th>Brewery ID</th><th>Brewery Name</th><th>Brewery Type</th><th>Street</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
-
+    <table border="1" width="100%">
+        <tr><th>Brewery Name</th><th>Street</th><th>Rating</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
         @{ 
-            foreach (BreweryNamespace.Brewery brewery in breweries) {
+            foreach(YelpBusinessWithReview.Business businessWithReview in businessesWithReviews) {
         <tr align="left">
-            <td>@brewery.Id</td>
-            <td>@brewery.Name</td>
-            <td>@brewery.BreweryType</td>
-            <td>@brewery.Street</td>
-            <td>@brewery.Latitude</td>
-            <td>@brewery.Longitude</td>
-            <td>@brewery.WebsiteUrl</td>
+            <td><strong>@businessWithReview.Name</strong></td>
+            <td>@businessWithReview.Location.Address1</td>
+            <td>@businessWithReview.Rating</td>
+            <td>@businessWithReview.Coordinates.Latitude</td>
+            <td>@businessWithReview.Coordinates.Longitude</td>
+            <td><a href="https://www.yelp.com@(businessWithReview.Url.AbsolutePath)">https://www.yelp.com@(businessWithReview.Url.AbsolutePath)</a></td>
         </tr>
-                }
+            foreach(ReviewNamespace.Review review in businessWithReview.Reviews)
+            {
+            <tr align="left">
+                <td colspan="1">@(review.User.Name)'s Review:</td>
+                <td colspan="5">@review.Text</td>
+            </tr>
             }
-
+            <tr>
+                <td colspan="6" class="gfg">         </td>
+            </tr>
+            }
+            }
     </table>
-
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
