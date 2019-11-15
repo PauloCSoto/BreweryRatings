@@ -64,21 +64,19 @@ namespace BreweryRatings.Pages
                     IsClosed = business.IsClosed,
                     Url = business.Url,
                     ReviewCount = business.ReviewCount,
-                    //NEED HELP: copying the following commented out arrays into their target arrays
-                    //Categories = business.Categories,
+                    Categories = business.Categories,
                     Rating = business.Rating,
-                    //Coordinates = business.Coordinates,
+                    Coordinates = business.Coordinates,
                     Transactions = business.Transactions,
-                    //Price = business.Price,
-                    //Location = business.Location,
+                    Price = business.Price,
+                    Location = business.Location,
                     Phone = business.Phone,
                     DisplayPhone = business.DisplayPhone,
                     Distance = business.Distance,
-                    //NEED HELP: Copying Reviews into target Reviews
-                    //Reviews = businessReview.Reviews,
+                    Reviews = businessReview.Reviews,
                     Total = businessReview.Total,
                     PossibleLanguages = businessReview.PossibleLanguages
-                });
+                }) ;
             }
             return new JsonResult(businessesWithReviews);
         }

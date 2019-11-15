@@ -51,22 +51,23 @@ namespace YelpBusinessWithReview
         public long ReviewCount { get; set; }
 
         [JsonProperty("categories")]
-        public Category[] Categories { get; set; }
+        public Yelp.Category[] Categories { get; set; }
+        //public List<Category> Categories { get; set; }
 
         [JsonProperty("rating")]
         public double Rating { get; set; }
 
         [JsonProperty("coordinates")]
-        public Center Coordinates { get; set; }
+        public Yelp.Center Coordinates { get; set; }
 
         [JsonProperty("transactions")]
         public string[] Transactions { get; set; }
 
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
-        public Price? Price { get; set; }
+        public Yelp.Price? Price { get; set; }
 
         [JsonProperty("location")]
-        public Location Location { get; set; }
+        public Yelp.Location Location { get; set; }
 
         [JsonProperty("phone")]
         public string Phone { get; set; }
@@ -78,14 +79,13 @@ namespace YelpBusinessWithReview
         public double Distance { get; set; }
 
         [JsonProperty("reviews")]
-        public Review[] Reviews { get; set; }
+        public ReviewNamespace.Review[] Reviews { get; set; }
 
         [JsonProperty("total")]
         public long Total { get; set; }
 
         [JsonProperty("possible_languages")]
         public string[] PossibleLanguages { get; set; }
-
     }
 
     public partial class Category
