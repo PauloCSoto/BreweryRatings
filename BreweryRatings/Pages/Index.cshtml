@@ -1,20 +1,17 @@
 ﻿@page
 @model IndexModel
-@using Yelp
 @{
     ViewData["Title"] = "Home page";
     var businessesWithReviews = (List<Yelp.BusinessWithReview>)ViewData["BusinessesWithReviews"];
+    var titleCity = ViewData["TitleCity"];
 }
 <div class="text-center">
-    <h1 class="display-4">Top 20 Breweries near Cincinnati with Reviews</h1>
+    <h1 class="display-4">Top 20 Breweries near @titleCity with Reviews</h1>
     <hr />
 
-    <form method="post" class="form-horizontal">
-        <div class="form-group">
-            <label asp-for="businessVar.Location.City" class="col-md-2 control-label"></label>
-            <input asp-for="businessVar.Location.City" class="col-md-2" />
-            <button type="submit" class="col-md-2 btn bth-primary">Submit</button>
-        </div>
+    <form method="get" class="form-horizontal">
+            Enter the City to search: <input asp-for="SearchCity"/>
+            <button type="submit" value="Submit">Submit</button>
     </form>
 
     <table border="1" width="100%">
