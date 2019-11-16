@@ -9,10 +9,11 @@
     <h1 class="display-4">Top 20 Breweries near @titleCity with Reviews</h1>
     <hr />
 
-    <form method="get" class="form-horizontal">
+    <form method="get">
             Enter the City to search: <input asp-for="SearchCity"/>
             <button type="submit" value="Submit">Submit</button>
     </form>
+    <p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
 
     <table border="1" width="100%">
         <tr><th>Brewery Name</th><th>Street</th><th>City</th><th>State</th><th>Rating</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
