@@ -5,13 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using BreweryNamespace;
 using System.Net;
 using System.Net.Http;
 using System.IO;
 using Yelp;
-using BusinessNamespace;
-using YelpBusinessWithReview;
 using ReviewNamespace;
 
 namespace BreweryRatings.Pages
@@ -32,7 +29,7 @@ namespace BreweryRatings.Pages
             //IDictionary<string, Yelp.Business> allBusinesses = new Dictionary<string, Yelp.Business>();
 
             //Get Yelp Business Search Json data for breweries in Cincinnati
-            Task<string> t = Http_Get("https://api.yelp.com/v3/businesses/search?location=cincinnati&categories=breweries");
+            Task<string> t = Http_Get("https://api.yelp.com/v3/businesses/search?categories=breweries&location=cincinnati&sort_by=rating");
             var yelpRatingsString = t.Result;
             YelpRating yelpRating = YelpRating.FromJson(yelpRatingsString);
 
@@ -46,7 +43,7 @@ namespace BreweryRatings.Pages
             List<Yelp.Business> yelpBusinesses = businesses.OfType<Yelp.Business>().ToList();
 
             //Create new List to hold new Json output
-            var businessesWithReviews = new List<YelpBusinessWithReview.Business>();
+            var businessesWithReviews = new List<Yelp.BusinessWithReview>();
 
             //Loop through businesses in Yelp Business Search results to find matching reviews
             foreach(Yelp.Business business in yelpBusinesses)
@@ -55,7 +52,7 @@ namespace BreweryRatings.Pages
                 var businessReviewJsonString = t2.Result;
                 BusinessReview businessReview = BusinessReview.FromJson(businessReviewJsonString);
 
-                businessesWithReviews.Add(new YelpBusinessWithReview.Business
+                businessesWithReviews.Add(new Yelp.BusinessWithReview
                 {
                     Id = business.Id,
                     Alias = business.Alias,
@@ -78,8 +75,9 @@ namespace BreweryRatings.Pages
                     PossibleLanguages = businessReview.PossibleLanguages
                 }) ;
             }
-            ViewData["BusinessesWithReviews"] = businessesWithReviews;
             //return new JsonResult(businessesWithReviews);
+            ViewData["BusinessesWithReviews"] = businessesWithReviews;
+
         }
         static async Task<string> Http_Get(string uri)
         {

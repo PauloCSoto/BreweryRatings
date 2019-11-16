@@ -2,15 +2,15 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-    var businessesWithReviews = (List<YelpBusinessWithReview.Business>)ViewData["BusinessesWithReviews"];
+    var businessesWithReviews = (List<Yelp.BusinessWithReview>)ViewData["BusinessesWithReviews"];
 }
 <div class="text-center">
-    <h1 class="display-4">IS7024 Project: Local Breweries in Cincinnati!</h1>
+    <h1 class="display-4">IS7024: Top 20 Breweries in Cincinnati with Reviews</h1>
     <hr />
     <table border="1" width="100%">
         <tr><th>Brewery Name</th><th>Street</th><th>Rating</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
         @{ 
-            foreach(YelpBusinessWithReview.Business businessWithReview in businessesWithReviews) {
+            foreach(Yelp.BusinessWithReview businessWithReview in businessesWithReviews) {
         <tr align="left">
             <td><strong>@businessWithReview.Name</strong></td>
             <td>@businessWithReview.Location.Address1</td>
@@ -22,7 +22,7 @@
             foreach(ReviewNamespace.Review review in businessWithReview.Reviews)
             {
             <tr align="left">
-                <td colspan="1">@(review.User.Name)'s Review:</td>
+                <td colspan="1"><a href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
                 <td colspan="5">@review.Text</td>
             </tr>
             }

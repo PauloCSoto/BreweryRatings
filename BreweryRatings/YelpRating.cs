@@ -63,7 +63,7 @@ namespace Yelp
         public string[] Transactions { get; set; }
 
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
-        public Price? Price { get; set; }
+        public string Price { get; set; }
 
         [JsonProperty("location")]
         public Location Location { get; set; }
@@ -102,23 +102,23 @@ namespace Yelp
         public string Address1 { get; set; }
 
         [JsonProperty("address2")]
-        public Address2? Address2 { get; set; }
+        public string Address2 { get; set; }
 
         [JsonProperty("address3")]
         public string Address3 { get; set; }
 
         [JsonProperty("city")]
-        public City City { get; set; }
+        public string City { get; set; }
 
         [JsonProperty("zip_code")]
         [JsonConverter(typeof(ParseStringConverter))]
         public long ZipCode { get; set; }
 
         [JsonProperty("country")]
-        public Country Country { get; set; }
+        public string Country { get; set; }
 
         [JsonProperty("state")]
-        public State State { get; set; }
+        public string State { get; set; }
 
         [JsonProperty("display_address")]
         public string[] DisplayAddress { get; set; }
@@ -129,16 +129,6 @@ namespace Yelp
         [JsonProperty("center")]
         public Center Center { get; set; }
     }
-
-    public enum Address2 { Empty, Ste1 };
-
-    public enum City { Bellevue, Cincinnati, Covington, Newport };
-
-    public enum Country { Us };
-
-    public enum State { Ky, Oh };
-
-    public enum Price { Empty, Price, Purple };
 
     public partial class YelpRating
     {
@@ -158,181 +148,9 @@ namespace Yelp
             DateParseHandling = DateParseHandling.None,
             Converters =
             {
-                Address2Converter.Singleton,
-                CityConverter.Singleton,
-                CountryConverter.Singleton,
-                StateConverter.Singleton,
-                PriceConverter.Singleton,
                 new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
             },
         };
-    }
-
-    internal class Address2Converter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(Address2) || t == typeof(Address2?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            switch (value)
-            {
-                case "":
-                    return Address2.Empty;
-                case "Ste 1":
-                    return Address2.Ste1;
-            }
-            throw new Exception("Cannot unmarshal type Address2");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (Address2)untypedValue;
-            switch (value)
-            {
-                case Address2.Empty:
-                    serializer.Serialize(writer, "");
-                    return;
-                case Address2.Ste1:
-                    serializer.Serialize(writer, "Ste 1");
-                    return;
-            }
-            throw new Exception("Cannot marshal type Address2");
-        }
-
-        public static readonly Address2Converter Singleton = new Address2Converter();
-    }
-
-    internal class CityConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(City) || t == typeof(City?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            switch (value)
-            {
-                case "Bellevue":
-                    return City.Bellevue;
-                case "Cincinnati":
-                    return City.Cincinnati;
-                case "Covington":
-                    return City.Covington;
-                case "Newport":
-                    return City.Newport;
-            }
-            throw new Exception("Cannot unmarshal type City");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (City)untypedValue;
-            switch (value)
-            {
-                case City.Bellevue:
-                    serializer.Serialize(writer, "Bellevue");
-                    return;
-                case City.Cincinnati:
-                    serializer.Serialize(writer, "Cincinnati");
-                    return;
-                case City.Covington:
-                    serializer.Serialize(writer, "Covington");
-                    return;
-                case City.Newport:
-                    serializer.Serialize(writer, "Newport");
-                    return;
-            }
-            throw new Exception("Cannot marshal type City");
-        }
-
-        public static readonly CityConverter Singleton = new CityConverter();
-    }
-
-    internal class CountryConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(Country) || t == typeof(Country?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            if (value == "US")
-            {
-                return Country.Us;
-            }
-            throw new Exception("Cannot unmarshal type Country");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (Country)untypedValue;
-            if (value == Country.Us)
-            {
-                serializer.Serialize(writer, "US");
-                return;
-            }
-            throw new Exception("Cannot marshal type Country");
-        }
-
-        public static readonly CountryConverter Singleton = new CountryConverter();
-    }
-
-    internal class StateConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(State) || t == typeof(State?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            switch (value)
-            {
-                case "KY":
-                    return State.Ky;
-                case "OH":
-                    return State.Oh;
-            }
-            throw new Exception("Cannot unmarshal type State");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (State)untypedValue;
-            switch (value)
-            {
-                case State.Ky:
-                    serializer.Serialize(writer, "KY");
-                    return;
-                case State.Oh:
-                    serializer.Serialize(writer, "OH");
-                    return;
-            }
-            throw new Exception("Cannot marshal type State");
-        }
-
-        public static readonly StateConverter Singleton = new StateConverter();
     }
 
     internal class ParseStringConverter : JsonConverter
@@ -365,51 +183,4 @@ namespace Yelp
 
         public static readonly ParseStringConverter Singleton = new ParseStringConverter();
     }
-
-    internal class PriceConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(Price) || t == typeof(Price?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            switch (value)
-            {
-                case "$":
-                    return Price.Price;
-                case "$$":
-                    return Price.Empty;
-                case "$$$":
-                    return Price.Purple;
-            }
-            throw new Exception("Cannot unmarshal type Price");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (Price)untypedValue;
-            switch (value)
-            {
-                case Price.Price:
-                    serializer.Serialize(writer, "$");
-                    return;
-                case Price.Empty:
-                    serializer.Serialize(writer, "$$");
-                    return;
-                case Price.Purple:
-                    serializer.Serialize(writer, "$$$");
-                    return;
-            }
-            throw new Exception("Cannot marshal type Price");
-        }
-
-        public static readonly PriceConverter Singleton = new PriceConverter();
-    }
 }
-
