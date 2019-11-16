@@ -1,19 +1,31 @@
 ﻿@page
 @model IndexModel
+@using Yelp
 @{
     ViewData["Title"] = "Home page";
     var businessesWithReviews = (List<Yelp.BusinessWithReview>)ViewData["BusinessesWithReviews"];
 }
 <div class="text-center">
-    <h1 class="display-4">IS7024: Top 20 Breweries in Cincinnati with Reviews</h1>
+    <h1 class="display-4">Top 20 Breweries near Cincinnati with Reviews</h1>
     <hr />
+
+    <form method="post" class="form-horizontal">
+        <div class="form-group">
+            <label asp-for="businessVar.Location.City" class="col-md-2 control-label"></label>
+            <input asp-for="businessVar.Location.City" class="col-md-2" />
+            <button type="submit" class="col-md-2 btn bth-primary">Submit</button>
+        </div>
+    </form>
+
     <table border="1" width="100%">
-        <tr><th>Brewery Name</th><th>Street</th><th>Rating</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
+        <tr><th>Brewery Name</th><th>Street</th><th>City</th><th>State</th><th>Rating</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
         @{ 
             foreach(Yelp.BusinessWithReview businessWithReview in businessesWithReviews) {
         <tr align="left">
             <td><strong>@businessWithReview.Name</strong></td>
             <td>@businessWithReview.Location.Address1</td>
+            <td>@businessWithReview.Location.City</td>
+            <td>@businessWithReview.Location.State</td>
             <td>@businessWithReview.Rating</td>
             <td>@businessWithReview.Coordinates.Latitude</td>
             <td>@businessWithReview.Coordinates.Longitude</td>
@@ -22,8 +34,8 @@
             foreach(ReviewNamespace.Review review in businessWithReview.Reviews)
             {
             <tr align="left">
-                <td colspan="1"><a href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
-                <td colspan="5">@review.Text</td>
+                <td colspan="2"><a href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
+                <td colspan="6">@review.Text</td>
             </tr>
             }
             <tr>

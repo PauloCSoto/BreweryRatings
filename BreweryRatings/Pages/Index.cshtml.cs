@@ -17,24 +17,21 @@ namespace BreweryRatings.Pages
     {
         private readonly ILogger<IndexModel> _logger;
 
+        public Business businessVar { get; set; }
+
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
         }
 
         public void OnGet()
+        //Comment the above line and uncomment the following one to output Json stream to Index view
         //public JsonResult OnGet()
         {
-            //Define dictionary to hold Yelp Businesses
-            //IDictionary<string, Yelp.Business> allBusinesses = new Dictionary<string, Yelp.Business>();
-
             //Get Yelp Business Search Json data for breweries in Cincinnati
             Task<string> t = Http_Get("https://api.yelp.com/v3/businesses/search?categories=breweries&location=cincinnati&sort_by=rating");
             var yelpRatingsString = t.Result;
             YelpRating yelpRating = YelpRating.FromJson(yelpRatingsString);
-
-            //Uncomment to send Yelp Business Search results with ratings to Page
-            //ViewData["YelpRatings"] = yelpRating;
 
             //Define Business array to hold Yelp Business data with ratings
             Yelp.Business[] businesses = yelpRating.Businesses;
@@ -75,9 +72,9 @@ namespace BreweryRatings.Pages
                     PossibleLanguages = businessReview.PossibleLanguages
                 }) ;
             }
+            //Uncomment this line and comment out the following one to output Json stream on the Index view
             //return new JsonResult(businessesWithReviews);
             ViewData["BusinessesWithReviews"] = businessesWithReviews;
-
         }
         static async Task<string> Http_Get(string uri)
         {

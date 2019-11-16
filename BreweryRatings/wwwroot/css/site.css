@@ -61,7 +61,6 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  font-size: 1.4rem;
 }
 .footer {
   position: absolute;
@@ -73,5 +72,5 @@ body {
 
 .gfg {
     border-collapse: separate;
-    border-spacing: 0 40px;
+    border-spacing: 0 20px;
 }
