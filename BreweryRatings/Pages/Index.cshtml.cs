@@ -23,21 +23,21 @@ namespace BreweryRatings.Pages
         }
 
         [BindProperty]
-        public string SearchCity { get; set; }
+        public string Location { get; set; }
 
-        public void OnGet(string SearchCity)
+        public void OnGet(string location)
         //Comment the above line and uncomment the following one to output Json stream to Index view
         //public JsonResult OnGet()
         {
-            if (string.IsNullOrEmpty(SearchCity))
+            if (string.IsNullOrEmpty(location))
             {
-                SearchCity = "Cincinnati";
+                location = "Cincinnati";
             }
 
             string searchBusiness = "https://api.yelp.com/v3/businesses/search?categories=breweries&sort_by=rating&location=";
 
             //Get Yelp Business Search Json data for breweries in City
-            Task<string> t = Http_Get(searchBusiness+SearchCity);
+            Task<string> t = Http_Get(searchBusiness+location);
             var yelpRatingsString = t.Result;
             YelpRating yelpRating = YelpRating.FromJson(yelpRatingsString);
 
@@ -83,7 +83,7 @@ namespace BreweryRatings.Pages
             //Uncomment this line and comment out the following one to output Json stream on the Index view
             //return new JsonResult(businessesWithReviews);
             ViewData["BusinessesWithReviews"] = businessesWithReviews;
-            ViewData["TitleCity"] = SearchCity;
+            ViewData["TitleCity"] = location;
         }
         static async Task<string> Http_Get(string uri)
         {

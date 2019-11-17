@@ -10,7 +10,7 @@
     <hr />
 
     <form method="get">
-            Enter the City to search: <input asp-for="SearchCity"/>
+            Enter the City to search: <input asp-for="Location"/>
             <button type="submit" value="Submit">Submit</button>
     </form>
     <p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
@@ -44,3 +44,4 @@
     </table>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+@ViewData["TitleCity"] = titleCity;
