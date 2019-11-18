@@ -5,8 +5,8 @@
     var businessesWithReviews = (List<Yelp.BusinessWithReview>)ViewData["BusinessesWithReviews"];
     var titleCity = ViewData["TitleCity"];
 }
-<div class="text-center">
-    <h1 class="display-4">Top 20 Breweries near @titleCity with Reviews</h1>
+<div class="table-responsive">
+    <h1>Top 20 Breweries near @titleCity with Reviews</h1>
     <hr />
 
     <form method="get">
@@ -15,20 +15,20 @@
     </form>
     <p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
 
-    <table border="1" width="100%">
-        <tr><th>Brewery Name</th><th>Street</th><th>City</th><th>State</th><th>Rating</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr><th>Brewery Name</th><th>Address</th><th>Rating</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
+        </thead>
         @{ 
             foreach(Yelp.BusinessWithReview businessWithReview in businessesWithReviews) {
-        <tr align="left">
-            <td><strong>@businessWithReview.Name</strong></td>
-            <td>@businessWithReview.Location.Address1</td>
-            <td>@businessWithReview.Location.City</td>
-            <td>@businessWithReview.Location.State</td>
-            <td>@businessWithReview.Rating</td>
-            <td>@businessWithReview.Coordinates.Latitude</td>
-            <td>@businessWithReview.Coordinates.Longitude</td>
-            <td><a href="https://www.yelp.com@(businessWithReview.Url.AbsolutePath)">https://www.yelp.com@(businessWithReview.Url.AbsolutePath)</a></td>
-        </tr>
+                <tr class="table-secondary">
+                    <td><strong>@businessWithReview.Name</strong></td>
+                    <td>@businessWithReview.Location.Address1, @businessWithReview.Location.City, @businessWithReview.Location.State</td>
+                    <td><span class="stars">@businessWithReview.Rating</span></td>
+                    <td>@businessWithReview.Coordinates.Latitude.ToString("0.0000")</td>
+                    <td>@businessWithReview.Coordinates.Longitude.ToString("0.0000")</td>
+                    <td><a href="https://www.yelp.com@(businessWithReview.Url.AbsolutePath)">https://www.yelp.com@(businessWithReview.Url.AbsolutePath)</a></td>
+                </tr>
             foreach(ReviewNamespace.Review review in businessWithReview.Reviews)
             {
             <tr align="left">

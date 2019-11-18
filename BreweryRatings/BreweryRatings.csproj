@@ -9,6 +9,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Star.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Star.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\YelpAPIKey.txt" />
   </ItemGroup>
 
