@@ -23,7 +23,7 @@
             foreach(Yelp.BusinessWithReview businessWithReview in businessesWithReviews) {
                 <tr class="table-secondary">
                     <td><strong><a href="https://www.yelp.com@(businessWithReview.Url.AbsolutePath)">@(businessWithReview.Name)</a></strong></td>
-                    <td><img src="@businessWithReview.ImageUrl" class="img-fluid" alt="@businessWithReview.Name" width="175" height="175"></td>
+                    <td><img src="@businessWithReview.ImageUrl" class="img-fluid border" alt="@businessWithReview.Name" width="175" height="175"></td>
                     <td>@businessWithReview.Location.Address1, @businessWithReview.Location.City, @businessWithReview.Location.State</td>
                     <td><span class="stars">@businessWithReview.Rating</span></td>
                     <td>@businessWithReview.Coordinates.Latitude.ToString("0.0000")</td>
@@ -36,11 +36,10 @@
                 </tr>
                 }
                 <tr>
-                    <td colspan="6" class="gfg">         </td>
+                    <td colspan="6"> </td>
                 </tr>
             }
             }
     </table>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-@ViewData["TitleCity"] = titleCity;
