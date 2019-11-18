@@ -17,28 +17,27 @@
 
     <table class="table table-bordered">
         <thead class="thead-dark">
-            <tr><th>Brewery Name</th><th>Address</th><th>Rating</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
+            <tr><th colspan="2">Brewery Name</th><th>Address</th><th>Rating</th><th>Latitude</th><th>Longitude</th></tr>
         </thead>
         @{ 
             foreach(Yelp.BusinessWithReview businessWithReview in businessesWithReviews) {
                 <tr class="table-secondary">
-                    <td><strong>@businessWithReview.Name</strong></td>
+                    <td><strong><a href="https://www.yelp.com@(businessWithReview.Url.AbsolutePath)">@(businessWithReview.Name)</a></strong></td>
+                    <td><img src="@businessWithReview.ImageUrl" class="img-fluid" alt="@businessWithReview.Name" width="175" height="175"></td>
                     <td>@businessWithReview.Location.Address1, @businessWithReview.Location.City, @businessWithReview.Location.State</td>
                     <td><span class="stars">@businessWithReview.Rating</span></td>
                     <td>@businessWithReview.Coordinates.Latitude.ToString("0.0000")</td>
                     <td>@businessWithReview.Coordinates.Longitude.ToString("0.0000")</td>
-                    <td><a href="https://www.yelp.com@(businessWithReview.Url.AbsolutePath)">https://www.yelp.com@(businessWithReview.Url.AbsolutePath)</a></td>
                 </tr>
-            foreach(ReviewNamespace.Review review in businessWithReview.Reviews)
-            {
-            <tr align="left">
-                <td colspan="2"><a href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
-                <td colspan="6">@review.Text</td>
-            </tr>
-            }
-            <tr>
-                <td colspan="6" class="gfg">         </td>
-            </tr>
+                foreach(ReviewNamespace.Review review in businessWithReview.Reviews) {
+                <tr align="left">
+                    <td colspan="1"><a href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
+                    <td colspan="5">@review.Text</td>
+                </tr>
+                }
+                <tr>
+                    <td colspan="6" class="gfg">         </td>
+                </tr>
             }
             }
     </table>
