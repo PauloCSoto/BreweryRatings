@@ -37,7 +37,7 @@ namespace BreweryRatings.Pages
             string searchBusiness = "https://api.yelp.com/v3/businesses/search?categories=breweries&sort_by=rating&location=";
 
             //Get Yelp Business Search Json data for breweries in City
-            Task<string> t = Http_Get(searchBusiness+location);
+            Task<string> t = Http_Get(searchBusiness + location);
             var yelpRatingsString = t.Result;
             YelpRating yelpRating = YelpRating.FromJson(yelpRatingsString);
 
@@ -48,16 +48,17 @@ namespace BreweryRatings.Pages
             List<Yelp.Business> yelpBusinesses = businesses.OfType<Yelp.Business>().ToList();
 
             //Create new List to hold new Json output
-            var businessesWithReviews = new List<Yelp.BusinessWithReview>();
+            //var businessesWithReviews = new List<Yelp.BusinessWithReview>();
+            IDictionary<Yelp.Business, ReviewNamespace.Review[]> businessesWithReviewsMap = new Dictionary<Yelp.Business, ReviewNamespace.Review[]>();
 
             //Loop through businesses in Yelp Business Search results to find matching reviews
-            foreach(Yelp.Business business in yelpBusinesses)
+            foreach (Yelp.Business business in yelpBusinesses)
             {
                 Task<string> t2 = Http_Get("https://api.yelp.com/v3/businesses/" + business.Id + "/reviews");
                 var businessReviewJsonString = t2.Result;
                 BusinessReview businessReview = BusinessReview.FromJson(businessReviewJsonString);
-
-                businessesWithReviews.Add(new Yelp.BusinessWithReview
+                businessesWithReviewsMap.Add(business, businessReview.Reviews);
+                /*businessesWithReviews.Add(new Yelp.BusinessWithReview
                 {
                     Id = business.Id,
                     Alias = business.Alias,
@@ -78,11 +79,11 @@ namespace BreweryRatings.Pages
                     Reviews = businessReview.Reviews,
                     Total = businessReview.Total,
                     PossibleLanguages = businessReview.PossibleLanguages
-                }) ;
+                }) ; */
             }
             //Uncomment this line and comment out the following one to output Json stream on the Index view
             //return new JsonResult(businessesWithReviews);
-            ViewData["BusinessesWithReviews"] = businessesWithReviews;
+            ViewData["BusinessesWithReviewsMap"] = businessesWithReviewsMap;
             ViewData["TitleCity"] = location;
         }
         static async Task<string> Http_Get(string uri)

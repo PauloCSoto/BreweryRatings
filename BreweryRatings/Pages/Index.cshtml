@@ -2,7 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-    var businessesWithReviews = (List<Yelp.BusinessWithReview>)ViewData["BusinessesWithReviews"];
+    var businessesWithReviewsMap = (IDictionary<Yelp.Business, ReviewNamespace.Review[]>)ViewData["BusinessesWithReviewsMap"];
     var titleCity = ViewData["TitleCity"];
 }
 <div class="text-center">
@@ -10,37 +10,53 @@
     <hr />
 
     <form method="get">
-            Enter the City to search: <input asp-for="Location"/>
-            <button type="submit" value="Submit">Submit</button>
+        Enter the City to search: <input asp-for="Location" />
+        <button type="submit" value="Submit">Submit</button>
     </form>
     <p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
 
-    <table border="1" width="100%">
-        <tr><th>Brewery Name</th><th>Street</th><th>City</th><th>State</th><th>Rating</th><th>Latitude</th><th>Longitude</th><th>URL</th></tr>
-        @{ 
-            foreach(Yelp.BusinessWithReview businessWithReview in businessesWithReviews) {
-        <tr align="left">
-            <td><strong>@businessWithReview.Name</strong></td>
-            <td>@businessWithReview.Location.Address1</td>
-            <td>@businessWithReview.Location.City</td>
-            <td>@businessWithReview.Location.State</td>
-            <td>@businessWithReview.Rating</td>
-            <td>@businessWithReview.Coordinates.Latitude</td>
-            <td>@businessWithReview.Coordinates.Longitude</td>
-            <td><a href="https://www.yelp.com@(businessWithReview.Url.AbsolutePath)">https://www.yelp.com@(businessWithReview.Url.AbsolutePath)</a></td>
-        </tr>
-            foreach(ReviewNamespace.Review review in businessWithReview.Reviews)
-            {
-            <tr align="left">
-                <td colspan="2"><a href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
-                <td colspan="6">@review.Text</td>
-            </tr>
-            }
+    <table width="100%" class="table table-bordered">
+        <thead class="thead-dark">
             <tr>
-                <td colspan="6" class="gfg">         </td>
+                <th>Brewery Name</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Rating</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>URL</th>
+                <th>Reviews</th>
             </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (Yelp.Business business in businessesWithReviewsMap.Keys)
+                {
+                    <tr align="left">
+                        <td><strong>@business.Name</strong></td>
+                        <td>@business.Location.Address1</td>
+                        <td>@business.Location.City</td>
+                        <td>@business.Location.State</td>
+                        <td>@business.Rating</td>
+                        <td>@business.Coordinates.Latitude</td>
+                        <td>@business.Coordinates.Longitude</td>
+                        <td><a href="https://www.yelp.com@(business.Url.AbsolutePath)">https://www.yelp.com@(business.Url.AbsolutePath)</a></td>
+                        <td><a href="#">Get Reviews</a></td>
+                    </tr>
+                    foreach (ReviewNamespace.Review review in businessesWithReviewsMap[business])
+                    {
+                        <tr align="left">
+                            <td colspan="2"><a href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
+                            <td colspan="7">@review.Text</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="6" class="gfg"> </td>
+                    </tr>
+                }
             }
-            }
+        </tbody>
     </table>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
