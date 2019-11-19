@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System.Net;
-using System.Net.Http;
-using System.IO;
-using Yelp;
 using ReviewNamespace;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Yelp;
 
 namespace BreweryRatings.Pages
 {
@@ -31,7 +29,7 @@ namespace BreweryRatings.Pages
         {
             if (string.IsNullOrEmpty(location))
             {
-                location = "Cincinnati";
+                location = Constant.DEFAULT_LOCATION;
             }
 
             string searchBusiness = "https://api.yelp.com/v3/businesses/search?categories=breweries&sort_by=rating&location=";
@@ -41,23 +39,20 @@ namespace BreweryRatings.Pages
             var yelpRatingsString = t.Result;
             YelpRating yelpRating = YelpRating.FromJson(yelpRatingsString);
 
-            //Define Business array to hold Yelp Business data with ratings
-            Yelp.Business[] businesses = yelpRating.Businesses;
-
-            //Convert array to List for better compatibility
-            List<Yelp.Business> yelpBusinesses = businesses.OfType<Yelp.Business>().ToList();
+            //Define Business list to hold Yelp Business data with ratings
+            var yelpBusinesses =yelpRating.Businesses.ToList();
 
             //Create new List to hold new Json output
-            var businessesWithReviews = new List<Yelp.BusinessWithReview>();
+            var businessesWithReviews = new List<BusinessWithReview>();
 
             //Loop through businesses in Yelp Business Search results to find matching reviews
-            foreach(Yelp.Business business in yelpBusinesses)
+            foreach(Business business in yelpBusinesses)
             {
                 Task<string> t2 = Http_Get("https://api.yelp.com/v3/businesses/" + business.Id + "/reviews");
                 var businessReviewJsonString = t2.Result;
                 BusinessReview businessReview = BusinessReview.FromJson(businessReviewJsonString);
 
-                businessesWithReviews.Add(new Yelp.BusinessWithReview
+                businessesWithReviews.Add(new BusinessWithReview
                 {
                     Id = business.Id,
                     Alias = business.Alias,
