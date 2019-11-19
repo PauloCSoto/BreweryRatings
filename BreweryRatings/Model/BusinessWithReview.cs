@@ -17,14 +17,18 @@ namespace Yelp
 
     public partial class BusinessWithReview : Business
     {
+        private ReviewNamespace.Review[] reviews;
+        private long total;
+        private string[] possibleLanguages;
+
         [JsonProperty("reviews")]
-        public ReviewNamespace.Review[] Reviews { get; set; }
+        public ReviewNamespace.Review[] Reviews { get => reviews; set => reviews = value; }
 
         [JsonProperty("total")]
-        public long Total { get; set; }
+        public long Total { get => total; set => total = value; }
 
         [JsonProperty("possible_languages")]
-        public string[] PossibleLanguages { get; set; }
+        public string[] PossibleLanguages { get => possibleLanguages; set => possibleLanguages = value; }
     }
 
     public partial class BusinessWithReview

@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\YelpAPIKey.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="GitHub" Version="1.16.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
