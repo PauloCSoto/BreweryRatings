@@ -31,7 +31,7 @@
                 </tr>
                 foreach(ReviewNamespace.Review review in businessWithReview.Reviews) {
                 <tr align="left">
-                    <td colspan="1"><a href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
+                    <td colspan="1"><a target="_blank" href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
                     <td colspan="5">@review.Text</td>
                 </tr>
                 }
