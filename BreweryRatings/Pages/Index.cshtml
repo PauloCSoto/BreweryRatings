@@ -5,6 +5,9 @@
     var businessesWithReviews = (List<Yelp.BusinessWithReview>)ViewData["BusinessesWithReviews"];
     var titleCity = ViewData["TitleCity"];
 }
+
+<img src='https://image.freepik.com/free-photo/close-up-blank-old-concrete-wall_23-2147856094.jpg' style='position:fixed;top:0px;left:0px;width:100%;height:100%;z-index:-1;'>
+
 <div class="table-responsive">
     <h1>Top 20 Breweries near @titleCity with Reviews</h1>
     <hr />
@@ -31,7 +34,7 @@
                 </tr>
                 foreach(ReviewNamespace.Review review in businessWithReview.Reviews) {
                 <tr align="left">
-                    <td colspan="1"><a href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
+                    <td colspan="1"><a target="_blank" href="@(review.Url.AbsoluteUri)">@(review.User.Name)'s Review:</a></td>
                     <td colspan="5">@review.Text</td>
                 </tr>
                 }

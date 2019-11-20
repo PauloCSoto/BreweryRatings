@@ -4,11 +4,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="wwwroot\YelpAPIKey.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ItemGroup>
     <None Remove="Star.png" />
   </ItemGroup>
 
@@ -17,10 +13,6 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\YelpAPIKey.txt" />
   </ItemGroup>
 
   <ItemGroup>

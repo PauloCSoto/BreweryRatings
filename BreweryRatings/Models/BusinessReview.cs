@@ -9,55 +9,69 @@
 namespace ReviewNamespace
 {
     using System;
-    using System.Collections.Generic;
-
     using System.Globalization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
     public partial class BusinessReview
     {
+        private Review[] reviews;
+        private long total;
+        private string[] possibleLanguages;
+
         [JsonProperty("reviews")]
-        public Review[] Reviews { get; set; }
+        public Review[] Reviews { get => reviews; set => reviews = value; }
 
         [JsonProperty("total")]
-        public long Total { get; set; }
+        public long Total { get => total; set => total = value; }
 
         [JsonProperty("possible_languages")]
-        public string[] PossibleLanguages { get; set; }
+        public string[] PossibleLanguages { get => possibleLanguages; set => possibleLanguages = value; }
     }
 
     public partial class Review
     {
+        private string id;
+        private Uri url;
+        private string text;
+        private long rating;
+        private DateTimeOffset timeCreated;
+        private User user;
+
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get=>id; set=>id=value; }
 
         [JsonProperty("url")]
-        public Uri Url { get; set; }
+        public Uri Url { get=>url; set=>url=value; }
 
         [JsonProperty("text")]
-        public string Text { get; set; }
+        public string Text { get=>text; set=>text=value; }
 
         [JsonProperty("rating")]
-        public long Rating { get; set; }
+        public long Rating { get=>rating; set=>rating=value; }
 
         [JsonProperty("time_created")]
-        public DateTimeOffset TimeCreated { get; set; }
+        public DateTimeOffset TimeCreated { get=>timeCreated; set=>timeCreated=value; }
 
         [JsonProperty("user")]
-        public User User { get; set; }
+        public User User { get=>user; set=>user=value; }
     }
 
     public partial class User
     {
+        private string id;
+        private Uri profileUrl;
+        private Uri imageUrl;
+        private string name;
+
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get => id; set => id = value; }
 
         [JsonProperty("profile_url")]
-        public Uri ProfileUrl { get; set; }
+        public Uri ProfileUrl { get => profileUrl; set => profileUrl = value; }
 
         [JsonProperty("image_url")]
-        public Uri ImageUrl { get; set; }
+        public Uri ImageUrl { get => imageUrl; set => imageUrl = value; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

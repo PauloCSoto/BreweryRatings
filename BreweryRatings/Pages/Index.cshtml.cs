@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System.Net;
 using System.Net.Http;
-using System.IO;
 using Yelp;
 using ReviewNamespace;
 
