@@ -8,126 +8,164 @@
 
 namespace Yelp
 {
-    using System;
-    using System.Collections.Generic;
-
-    using System.Globalization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+    using System;
+    using System.Globalization;
 
     public partial class YelpRating
     {
+        private Business[] _businesses;
+        private long _total;
+        private Region _region;
+
         [JsonProperty("businesses")]
-        public Business[] Businesses { get; set; }
+        public Business[] Businesses { get => _businesses; set => _businesses = value; }
 
         [JsonProperty("total")]
-        public long Total { get; set; }
+        public long Total { get => _total; set => _total = value; }
 
         [JsonProperty("region")]
-        public Region Region { get; set; }
+        public Region Region { get => _region; set => _region = value; }
     }
 
     public partial class Business
     {
+        private string _id;
+        private string _alias;
+        private string _name;
+        private Uri _imageUrl;
+        private bool _isClosed;
+        private Uri _url;
+        private long _reviewCount;
+        private Category[] _categories;
+        private double _rating;
+        private Center _coordinates;
+        private string[] _transactions;
+        private string _price;
+        private Location _location;
+        private string _phone;
+        private string _displayPhone;
+        private double _distance;
+
+
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get => _id; set => _id = value; }
 
         [JsonProperty("alias")]
-        public string Alias { get; set; }
+        public string Alias { get => _alias; set => _alias = value; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get => _name; set => _name = value; }
 
         [JsonProperty("image_url")]
-        public Uri ImageUrl { get; set; }
+        public Uri ImageUrl { get => _imageUrl; set => _imageUrl = value; }
 
         [JsonProperty("is_closed")]
-        public bool IsClosed { get; set; }
+        public bool IsClosed { get => _isClosed; set => _isClosed = value; }
 
         [JsonProperty("url")]
-        public Uri Url { get; set; }
+        public Uri Url { get => _url; set => _url = value; }
 
         [JsonProperty("review_count")]
-        public long ReviewCount { get; set; }
+        public long ReviewCount { get => _reviewCount; set => _reviewCount = value; }
 
         [JsonProperty("categories")]
-        public Category[] Categories { get; set; }
+        public Category[] Categories { get => _categories; set => _categories = value; }
 
         [JsonProperty("rating")]
-        public double Rating { get; set; }
+        public double Rating { get => _rating; set => _rating = value; }
 
         [JsonProperty("coordinates")]
-        public Center Coordinates { get; set; }
+        public Center Coordinates { get => _coordinates; set => _coordinates = value; }
 
         [JsonProperty("transactions")]
-        public string[] Transactions { get; set; }
+        public string[] Transactions { get => _transactions; set => _transactions = value; }
 
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
-        public string Price { get; set; }
+        public string Price { get => _price; set => _price = value; }
 
         [JsonProperty("location")]
-        public Location Location { get; set; }
+        public Location Location { get => _location; set => _location = value; }
 
         [JsonProperty("phone")]
-        public string Phone { get; set; }
+        public string Phone { get => _phone; set => _phone = value; }
 
         [JsonProperty("display_phone")]
-        public string DisplayPhone { get; set; }
+        public string DisplayPhone { get => _displayPhone; set => _displayPhone = value; }
 
         [JsonProperty("distance")]
-        public double Distance { get; set; }
+        public double Distance { get => _distance; set => _distance = value; }
     }
 
     public partial class Category
     {
+        private string _alias;
+        private string _title;
+
         [JsonProperty("alias")]
-        public string Alias { get; set; }
+        public string Alias { get => _alias; set => _alias = value; }
 
         [JsonProperty("title")]
-        public string Title { get; set; }
+        public string Title { get => _title; set => _title = value; }
     }
 
     public partial class Center
     {
+        private double _latitude;
+        private double _longitude;
+
         [JsonProperty("latitude")]
-        public double Latitude { get; set; }
+        public double Latitude { get => _latitude; set => _latitude = value; }
 
         [JsonProperty("longitude")]
-        public double Longitude { get; set; }
+        public double Longitude { get => _longitude; set => _longitude = value; }
     }
 
     public partial class Location
     {
+        private string _address1;
+        private string _address2;
+        private string _address3;
+        private string _city;
+        private long _zipcode;
+        private string _country;
+        private string _state;
+        string[] _displayAddress;
+
+
+
         [JsonProperty("address1")]
-        public string Address1 { get; set; }
+        public string Address1 { get => _address1; set => _address1 = value; }
 
         [JsonProperty("address2")]
-        public string Address2 { get; set; }
+        public string Address2 { get => _address2; set => _address2 = value; }
 
         [JsonProperty("address3")]
-        public string Address3 { get; set; }
+        public string Address3 { get => _address3; set => _address3 = value; }
 
         [JsonProperty("city")]
-        public string City { get; set; }
+        public string City { get => _city; set => _city = value; }
 
         [JsonProperty("zip_code")]
         [JsonConverter(typeof(ParseStringConverter))]
-        public long ZipCode { get; set; }
+        public long ZipCode { get => _zipcode; set => _zipcode = value; }
 
         [JsonProperty("country")]
-        public string Country { get; set; }
+        public string Country { get => _country; set => _country = value; }
 
         [JsonProperty("state")]
-        public string State { get; set; }
+        public string State { get => _state; set => _state = value; }
 
         [JsonProperty("display_address")]
-        public string[] DisplayAddress { get; set; }
+        public string[] DisplayAddress { get => _displayAddress; set => _displayAddress = value; }
     }
 
     public partial class Region
     {
+        private Center _region;
         [JsonProperty("center")]
-        public Center Center { get; set; }
+        public Center Center { get => _region; set => _region = value; }
     }
 
     public partial class YelpRating

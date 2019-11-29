@@ -14,17 +14,22 @@ namespace Yelp
     using System.Globalization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+    using ReviewNamespace;
 
     public partial class BusinessWithReview : Business
     {
+        private Review[] _reviews;
+        private long _total;
+        private string[] _possibleLanguage;
+
         [JsonProperty("reviews")]
-        public ReviewNamespace.Review[] Reviews { get; set; }
+        public Review[] Reviews { get => _reviews; set => _reviews = value; }
 
         [JsonProperty("total")]
-        public long Total { get; set; }
+        public long Total { get => _total; set => _total = value; }
 
         [JsonProperty("possible_languages")]
-        public string[] PossibleLanguages { get; set; }
+        public string[] PossibleLanguages { get => _possibleLanguage; set => _possibleLanguage = value; }
     }
 
     public partial class BusinessWithReview

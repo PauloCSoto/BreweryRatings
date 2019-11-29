@@ -17,50 +17,66 @@ namespace ReviewNamespace
 
     public partial class BusinessReview
     {
+        private Review[] _reviews;
+        private long _total;
+        private string[] _possibleLanguage;
+
         [JsonProperty("reviews")]
-        public Review[] Reviews { get; set; }
+        public Review[] Reviews { get => _reviews; set => _reviews = value; }
 
         [JsonProperty("total")]
-        public long Total { get; set; }
+        public long Total { get => _total; set => _total = value; }
 
         [JsonProperty("possible_languages")]
-        public string[] PossibleLanguages { get; set; }
+        public string[] PossibleLanguages { get => _possibleLanguage; set => _possibleLanguage = value; }
     }
 
     public partial class Review
     {
+        private string _id;
+        private Uri _url;
+        private string _text;
+        private long _rating;
+        private DateTimeOffset _timeCreated;
+        private User _user;
+
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get => _id; set => _id = value; }
 
         [JsonProperty("url")]
-        public Uri Url { get; set; }
+        public Uri Url { get => _url; set => _url = value; }
 
         [JsonProperty("text")]
-        public string Text { get; set; }
+        public string Text { get => _text; set => _text = value; }
 
         [JsonProperty("rating")]
-        public long Rating { get; set; }
+        public long Rating { get => _rating; set => _rating = value; }
 
         [JsonProperty("time_created")]
-        public DateTimeOffset TimeCreated { get; set; }
+        public DateTimeOffset TimeCreated { get => _timeCreated; set => _timeCreated = value; }
 
         [JsonProperty("user")]
-        public User User { get; set; }
+        public User User { get => _user; set => _user = value; }
     }
 
     public partial class User
     {
+        private string _id;
+        private Uri _profileUrl; 
+        private Uri _imageUrl;
+        private string _name;
+        
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get => _id; set => _id = value; }
 
         [JsonProperty("profile_url")]
-        public Uri ProfileUrl { get; set; }
+        public Uri ProfileUrl { get => _profileUrl; set => _profileUrl = value; }
 
         [JsonProperty("image_url")]
-        public Uri ImageUrl { get; set; }
+        public Uri ImageUrl { get => _imageUrl; set => _imageUrl = value; }
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get => _name; set => _name = value; }
     }
 
     public partial class BusinessReview
