@@ -1,0 +1,11 @@
+﻿body {
+    background-color: white;
+}
+
+#header {
+    position: relative;
+}
+
+#content {
+    position: relative;
+}

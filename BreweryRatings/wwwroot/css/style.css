@@ -1,0 +1,14 @@
+﻿body {
+    background-color: #FFE450;
+}
+
+#header {
+    position: relative;
+    vertical-align: top;
+    left: 0;
+    top: 0;
+}
+
+#content {
+    position: relative;
+}
