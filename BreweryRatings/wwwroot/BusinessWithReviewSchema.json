@@ -1,0 +1,323 @@
+﻿{
+	"$schema": "http://json-schema.org/draft-06/schema#",
+	"type": "array",
+	"items": {
+		"$ref": "#/definitions/UntappedSchemaElement"
+	},
+	"definitions": {
+		"UntappedSchemaElement": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"reviews": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Review"
+					}
+				},
+				"total": {
+					"type": "integer"
+				},
+				"possibleLanguages": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/PossibleLanguage"
+					}
+				},
+				"id": {
+					"type": "string"
+				},
+				"alias": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"imageUrl": {
+					"type": "string",
+					"format": "uri",
+					"qt-uri-protocols": [
+						"https"
+					],
+					"qt-uri-extensions": [
+						".jpg"
+					]
+				},
+				"isClosed": {
+					"type": "boolean"
+				},
+				"url": {
+					"type": "string",
+					"format": "uri",
+					"qt-uri-protocols": [
+						"https"
+					]
+				},
+				"reviewCount": {
+					"type": "integer"
+				},
+				"categories": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Category"
+					}
+				},
+				"rating": {
+					"type": "number"
+				},
+				"coordinates": {
+					"$ref": "#/definitions/Coordinates"
+				},
+				"transactions": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"price": {
+					"$ref": "#/definitions/Price"
+				},
+				"location": {
+					"$ref": "#/definitions/Location"
+				},
+				"phone": {
+					"type": "string"
+				},
+				"displayPhone": {
+					"type": "string"
+				},
+				"distance": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"alias",
+				"categories",
+				"coordinates",
+				"displayPhone",
+				"distance",
+				"id",
+				"imageUrl",
+				"isClosed",
+				"location",
+				"name",
+				"phone",
+				"possibleLanguages",
+				"price",
+				"rating",
+				"reviewCount",
+				"reviews",
+				"total",
+				"transactions",
+				"url"
+			],
+			"title": "UntappedSchemaElement"
+		},
+		"Category": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"alias": {
+					"type": "string"
+				},
+				"title": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"alias",
+				"title"
+			],
+			"title": "Category"
+		},
+		"Coordinates": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"latitude": {
+					"type": "number"
+				},
+				"longitude": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"latitude",
+				"longitude"
+			],
+			"title": "Coordinates"
+		},
+		"Location": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"address1": {
+					"type": "string"
+				},
+				"address2": {
+					"anyOf": [
+						{
+							"type": "null"
+						},
+						{
+							"type": "string"
+						}
+					]
+				},
+				"address3": {
+					"anyOf": [
+						{
+							"type": "null"
+						},
+						{
+							"type": "string"
+						}
+					]
+				},
+				"city": {
+					"type": "string"
+				},
+				"zipCode": {
+					"type": "integer"
+				},
+				"country": {
+					"$ref": "#/definitions/Country"
+				},
+				"state": {
+					"$ref": "#/definitions/State"
+				},
+				"displayAddress": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"required": [
+				"address1",
+				"address2",
+				"address3",
+				"city",
+				"country",
+				"displayAddress",
+				"state",
+				"zipCode"
+			],
+			"title": "Location"
+		},
+		"Review": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string",
+					"format": "uri",
+					"qt-uri-protocols": [
+						"https"
+					]
+				},
+				"text": {
+					"type": "string"
+				},
+				"rating": {
+					"type": "integer"
+				},
+				"timeCreated": {
+					"type": "string",
+					"format": "date-time"
+				},
+				"user": {
+					"$ref": "#/definitions/User"
+				}
+			},
+			"required": [
+				"id",
+				"rating",
+				"text",
+				"timeCreated",
+				"url",
+				"user"
+			],
+			"title": "Review"
+		},
+		"User": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"profileUrl": {
+					"type": "string",
+					"format": "uri",
+					"qt-uri-protocols": [
+						"https"
+					]
+				},
+				"imageUrl": {
+					"anyOf": [
+						{
+							"type": "null"
+						},
+						{
+							"type": "string",
+							"format": "uri",
+							"qt-uri-protocols": [
+								"https"
+							],
+							"qt-uri-extensions": [
+								".jpg"
+							]
+						}
+					]
+				},
+				"name": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"id",
+				"imageUrl",
+				"name",
+				"profileUrl"
+			],
+			"title": "User"
+		},
+		"Country": {
+			"type": "string",
+			"enum": [
+				"US"
+			],
+			"title": "Country"
+		},
+		"State": {
+			"type": "string",
+			"enum": [
+				"OH",
+				"KY",
+				"IN"
+			],
+			"title": "State"
+		},
+		"PossibleLanguage": {
+			"type": "string",
+			"enum": [
+				"en",
+				"ja"
+			],
+			"title": "PossibleLanguage"
+		},
+		"Price": {
+			"type": "string",
+			"enum": [
+				"$$",
+				"$",
+				"$$$"
+			],
+			"title": "Price"
+		}
+	}
+}

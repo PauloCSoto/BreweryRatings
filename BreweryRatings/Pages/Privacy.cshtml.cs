@@ -44,20 +44,13 @@ namespace BreweryRatings.Pages
             Task<string> yelpSearch = Http_Get(searchBusiness + location);
             var yelpRatingsString = yelpSearch.Result;
             YelpRating yelpRating = YelpRating.FromJson(yelpRatingsString);
-
-            Task<string> businessLicenseSearch = Http_Get("https://licenseowners2019.azurewebsites.net/Privacy");
-            var businessLicenseJsonString = businessLicenseSearch.Result;
-            BusinessLicenseOwner[] businessLicenses = BusinessLicenseOwner.FromJson(businessLicenseJsonString);
-
             
             Yelp.Business[] businesses = yelpRating.Businesses;
 
-            
             List<Yelp.Business> yelpBusinesses = businesses.OfType<Yelp.Business>().ToList();
 
             var businessesWithReviews = new List<Yelp.BusinessWithReview>();
 
-            
             foreach (Yelp.Business business in yelpBusinesses)
             {
                 Task<string> businessSearch = Http_Get("https://api.yelp.com/v3/businesses/" + business.Id + "/reviews");
@@ -89,6 +82,8 @@ namespace BreweryRatings.Pages
             }
             return new JsonResult(businessesWithReviews);
         }
+
+
         static async Task<string> Http_Get(string uri)
         {
             String myYelpKey = System.IO.File.ReadAllText("YelpAPIKey.txt");
