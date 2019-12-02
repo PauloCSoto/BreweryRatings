@@ -22,12 +22,12 @@
     </div>
     <div id="contents">
         <div>
-            <form method="get" action="/?Location=">
+            <form method="get" action="?">
                 <div>
                     <label for="location">Enter the City to search: </label>
                 </div>
                 <div>
-                    <input id="location"/>
+                    <input id="location" asp-for="Location" />
                 </div>
                 <div>
                     <button type="submit" value="Submit">Submit</button>

@@ -20,7 +20,7 @@ namespace BreweryRatings.Pages
                 string licenseJsonString = webClient.DownloadString("https://licenseowners2019.azurewebsites.net/Privacy");
                 BusinessLicenseOwner[] businessLicenses = BusinessLicenseOwner.FromJson(licenseJsonString);
 
-                foreach (BusinessLicenseOwnerNamespace.BusinessLicenseOwner businessLicense in businessLicenseOwners)
+                foreach (BusinessLicenseOwnerNamespace.BusinessLicenseOwner businessLicense in businessLicenses)
                 {
                     businessLicenseOwners.Add(new BusinessLicenseOwner
                     {
