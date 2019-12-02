@@ -9,6 +9,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Yelp;
 
+/// <summary>
+/// Http Get search business: Get Yelp Business Search Json data for breweries in City
+/// [] business: Define Business array to hold Yelp Business data with ratings
+/// List business: Convert array to List for better compatibility
+/// var business reviews: Create new List to hold new Json output
+/// first foreach: Loop through businesses in Yelp Business Search results to find matching reviews
+/// businesslicense search is bringing in the json stream from another group and we do similar tasks similar to the business 
+/// </summary>
+
 namespace BreweryRatings.Pages
 {
     public class IndexModel : PageModel
@@ -24,8 +33,6 @@ namespace BreweryRatings.Pages
         public string Location { get; set; }
 
         public void OnGet(string location)
-        //Comment the above line and uncomment the following one to output Json stream to Index view
-        //public JsonResult OnGet()
         {
             if (string.IsNullOrEmpty(location))
             {
@@ -34,18 +41,18 @@ namespace BreweryRatings.Pages
 
             string searchBusiness = "https://api.yelp.com/v3/businesses/search?categories=breweries&sort_by=rating&location=";
 
-            //Get Yelp Business Search Json data for breweries in City
+            
             Task<string> t = Http_Get(searchBusiness+location);
             var yelpRatingsString = t.Result;
             YelpRating yelpRating = YelpRating.FromJson(yelpRatingsString);
 
-            //Define Business list to hold Yelp Business data with ratings
+            
             var yelpBusinesses =yelpRating.Businesses.ToList();
 
-            //Create new List to hold new Json output
+            
             var businessesWithReviews = new List<BusinessWithReview>();
 
-            //Loop through businesses in Yelp Business Search results to find matching reviews
+            
             foreach(Business business in yelpBusinesses)
             {
                 Task<string> t2 = Http_Get("https://api.yelp.com/v3/businesses/" + business.Id + "/reviews");
@@ -75,8 +82,7 @@ namespace BreweryRatings.Pages
                     PossibleLanguages = businessReview.PossibleLanguages
                 }) ;
             }
-            //Uncomment this line and comment out the following one to output Json stream on the Index view
-            //return new JsonResult(businessesWithReviews);
+            
             ViewData["BusinessesWithReviews"] = businessesWithReviews;
             ViewData["TitleCity"] = location;
         }
