@@ -7,6 +7,13 @@ using BusinessLicenseOwnerNamespace;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+/// <summary>
+/// WebClient.DownloadString allows us to download the Json stream from the other team
+/// The foreach allows us to select every business license owner
+/// We used list to create the new list of business license owners
+/// In creating our code, we used one of our code reviews to help formulate this code in an efficient manner
+/// </summary>
+
 namespace BreweryRatings.Pages
 {
     public class BusinessLicensePageModel : PageModel
