@@ -46,27 +46,27 @@
                 </tr>
             </thead>
             <tbody>
-                    @foreach (Yelp.BusinessWithReview businessWithReview in businessesWithReviews)
+                @foreach (Yelp.BusinessWithReview businessWithReview in businessesWithReviews)
+                {
+                    <tr class="table-secondary">
+                        <td><strong><a href="https://www.yelp.com/@businessWithReview.Url.AbsolutePath">@businessWithReview.Name</a></strong></td>
+                        <td><img src="@businessWithReview.ImageUrl" class="img-fluid border" alt="@businessWithReview.Name" width="175" height="175" /></td>
+                        <td>@businessWithReview.Location.Address1, @businessWithReview.Location.City, @businessWithReview.Location.State</td>
+                        <td><span class="stars">@businessWithReview.Rating</span></td>
+                        <td>@businessWithReview.Coordinates.Latitude.ToString("0.0000")</td>
+                        <td>@businessWithReview.Coordinates.Longitude.ToString("0.0000")</td>
+                    </tr>
+                    @foreach (ReviewNamespace.Review review in businessWithReview.Reviews)
                     {
-                        <tr class="table-secondary">
-                            <td><strong><a href="https://www.yelp.com/@businessWithReview.Url.AbsolutePath">@businessWithReview.Name</a></strong></td>
-                            <td><img src="@businessWithReview.ImageUrl" class="img-fluid border" alt="@businessWithReview.Name" width="175" height="175" /></td>
-                            <td>@businessWithReview.Location.Address1, @businessWithReview.Location.City, @businessWithReview.Location.State</td>
-                            <td><span class="stars">@businessWithReview.Rating</span></td>
-                            <td>@businessWithReview.Coordinates.Latitude.ToString("0.0000")</td>
-                            <td>@businessWithReview.Coordinates.Longitude.ToString("0.0000")</td>
-                        </tr>
-                        @foreach (ReviewNamespace.Review review in businessWithReview.Reviews)
-                        {
-                            <tr align="left">
-                                <td colspan="1"><a href="@review.Url.AbsoluteUri">@review.User.Name's Review:</a></td>
-                                <td colspan="5">@review.Text</td>
-                            </tr>
-                        }
-                        <tr>
-                            <td colspan="6"> </td>
+                        <tr align="left">
+                            <td colspan="1"><a href="@review.Url.AbsoluteUri">@review.User.Name's Review:</a></td>
+                            <td colspan="5">@review.Text</td>
                         </tr>
                     }
+                    <tr>
+                        <td colspan="6"> </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
