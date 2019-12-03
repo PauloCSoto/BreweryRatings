@@ -8,3 +8,7 @@
 #content {
     position: relative;
 }
+
+h1 {
+    font-size: 2em;
+}

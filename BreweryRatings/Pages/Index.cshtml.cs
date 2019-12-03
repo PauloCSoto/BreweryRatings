@@ -41,17 +41,13 @@ namespace BreweryRatings.Pages
 
             string searchBusiness = "https://api.yelp.com/v3/businesses/search?categories=breweries&sort_by=rating&location=";
 
-            
             Task<string> t = Http_Get(searchBusiness+location);
             var yelpRatingsString = t.Result;
             YelpRating yelpRating = YelpRating.FromJson(yelpRatingsString);
-
             
-            var yelpBusinesses =yelpRating.Businesses.ToList();
-
+            var yelpBusinesses = yelpRating.Businesses.ToList();
             
             var businessesWithReviews = new List<BusinessWithReview>();
-
             
             foreach(Business business in yelpBusinesses)
             {

@@ -5,70 +5,57 @@
     var businessesWithReviews = (List<Yelp.BusinessWithReview>)ViewData["BusinessesWithReviews"];
     var titleCity = ViewData["TitleCity"];
 }
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-    <title>Brewery Ratings</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <link rel="stylesheet" href="css/mobile.css" media="screen and (max-device-width: 480px)" type="text/css" />
-    <link rel="stylesheet" href="css/print.css" media="print" type="text/css" />
-</head>
-
-<body>
-    <div id="header" class="table-responsive">
-        <h1>Top 20 Breweries near @titleCity with Reviews</h1>
-        <hr />
+<div class="container">
+    <h1>Top 20 Breweries near @titleCity with Reviews</h1>
+    <hr />
+</div>
+<div class="container" id="contents">
+    <div>
+        <form method="get" action="?">
+            <div>
+                <label for="location">Enter the U.S. City to search: </label>
+            </div>
+            <div>
+                <input id="location" asp-for="Location" />
+            </div>
+            <div>
+                <button type="submit" value="Submit">Submit</button>
+            </div>
+        </form>
     </div>
-    <div id="contents">
-        <div>
-            <form method="get" action="?">
-                <div>
-                    <label for="location">Enter the City to search: </label>
-                </div>
-                <div>
-                    <input id="location" asp-for="Location" />
-                </div>
-                <div>
-                    <button type="submit" value="Submit">Submit</button>
-                </div>
-            </form>
-        </div>
-        <p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
-        <table class="table table-bordered" style="border-color:black">
-            <thead class="thead-dark">
-                <tr>
-                    <th colspan="2">Brewery Name</th>
-                    <th>Address</th>
-                    <th>Rating</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
+    <p>Examples: "New York City", "NYC", "350 5th Ave, New York, NY 10118"</p>
+    <table class="table table-bordered" style="border-color:black">
+        <thead class="thead-dark">
+            <tr>
+                <th colspan="2">Brewery Name</th>
+                <th>Address</th>
+                <th>Rating</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Yelp.BusinessWithReview businessWithReview in businessesWithReviews)
+            {
+                <tr class="table-secondary">
+                    <td><strong><a href="https://www.yelp.com/@businessWithReview.Url.AbsolutePath">@businessWithReview.Name</a></strong></td>
+                    <td><img src="@businessWithReview.ImageUrl" class="img-fluid border" alt="@businessWithReview.Name" width="175" height="175" /></td>
+                    <td>@businessWithReview.Location.Address1, @businessWithReview.Location.City, @businessWithReview.Location.State</td>
+                    <td><span class="stars">@businessWithReview.Rating</span></td>
+                    <td>@businessWithReview.Coordinates.Latitude.ToString("0.0000")</td>
+                    <td>@businessWithReview.Coordinates.Longitude.ToString("0.0000")</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (Yelp.BusinessWithReview businessWithReview in businessesWithReviews)
+                @foreach (ReviewNamespace.Review review in businessWithReview.Reviews)
                 {
-                    <tr class="table-secondary">
-                        <td><strong><a href="https://www.yelp.com/@businessWithReview.Url.AbsolutePath">@businessWithReview.Name</a></strong></td>
-                        <td><img src="@businessWithReview.ImageUrl" class="img-fluid border" alt="@businessWithReview.Name" width="175" height="175" /></td>
-                        <td>@businessWithReview.Location.Address1, @businessWithReview.Location.City, @businessWithReview.Location.State</td>
-                        <td><span class="stars">@businessWithReview.Rating</span></td>
-                        <td>@businessWithReview.Coordinates.Latitude.ToString("0.0000")</td>
-                        <td>@businessWithReview.Coordinates.Longitude.ToString("0.0000")</td>
-                    </tr>
-                    @foreach (ReviewNamespace.Review review in businessWithReview.Reviews)
-                    {
-                        <tr align="left">
-                            <td colspan="1"><a href="@review.Url.AbsoluteUri">@review.User.Name's Review:</a></td>
-                            <td colspan="5">@review.Text</td>
-                        </tr>
-                    }
-                    <tr>
-                        <td colspan="6"> </td>
+                    <tr align="left">
+                        <td colspan="1"><a href="@review.Url.AbsoluteUri">@review.User.Name's Review:</a></td>
+                        <td colspan="5">@review.Text</td>
                     </tr>
                 }
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+                <tr>
+                    <td colspan="6"> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
